@@ -1,0 +1,65 @@
+-- DogLib (ModuleScript)
+local DogLib = {}
+
+function DogLib:CreateGUI(title, callback)
+    local CollectionService = game:GetService("CollectionService")
+    local Players = game:GetService("Players")
+    local PlayerGui = Players.LocalPlayer:WaitForChild("PlayerGui")
+
+    local G2L = {}
+
+    -- ScreenGui
+    G2L.ScreenGui = Instance.new("ScreenGui")
+    G2L.ScreenGui.Name = title or "DogLibGUI"
+    G2L.ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    G2L.ScreenGui.Parent = PlayerGui
+    CollectionService:AddTag(G2L.ScreenGui, "main")
+
+    -- Frame
+    G2L.Frame = Instance.new("Frame", G2L.ScreenGui)
+    G2L.Frame.BorderSizePixel = 0
+    G2L.Frame.BackgroundColor3 = Color3.fromRGB(76, 76, 76)
+    G2L.Frame.Size = UDim2.new(0, 252, 0, 448)
+    G2L.Frame.Position = UDim2.new(0, 367, 0, -47)
+    Instance.new("UIDragDetector", G2L.Frame)
+    Instance.new("UICorner", G2L.Frame)
+
+    -- Label
+    G2L.Label = Instance.new("TextLabel", G2L.Frame)
+    G2L.Label.BorderSizePixel = 0
+    G2L.Label.BackgroundColor3 = Color3.fromRGB(105, 105, 105)
+    G2L.Label.Size = UDim2.new(0, 252, 0, 90)
+    G2L.Label.Text = title or "DogLib"
+    Instance.new("UICorner", G2L.Label)
+
+    -- TextBox
+    G2L.TextBox = Instance.new("TextBox", G2L.Frame)
+    G2L.TextBox.CursorPosition = -1
+    G2L.TextBox.BorderSizePixel = 0
+    G2L.TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+    G2L.TextBox.BackgroundColor3 = Color3.fromRGB(105, 105, 105)
+    G2L.TextBox.Size = UDim2.new(0, 240, 0, 62)
+    G2L.TextBox.Position = UDim2.new(0, 6, 0, 96)
+    G2L.TextBox.PlaceholderText = "Digite o nome do player"
+    Instance.new("UICorner", G2L.TextBox)
+
+    -- Button
+    G2L.Button = Instance.new("TextButton", G2L.Frame)
+    G2L.Button.BorderSizePixel = 0
+    G2L.Button.BackgroundColor3 = Color3.fromRGB(149, 149, 149)
+    G2L.Button.Size = UDim2.new(0, 238, 0, 60)
+    G2L.Button.Position = UDim2.new(0, 8, 0, 166)
+    G2L.Button.Text = "Selecionar"
+    Instance.new("UICorner", G2L.Button)
+
+    -- Callback do botão
+    if callback then
+        G2L.Button.MouseButton1Click:Connect(function()
+            callback(G2L.TextBox.Text)
+        end)
+    end
+
+    return G2L
+end
+
+return DogLib
